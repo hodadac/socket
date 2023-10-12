@@ -9,7 +9,6 @@ function Main(){
     return(
         <>
             <Routes>
-                <Route path="/" element={<MemoList/>}></Route>
                 <Route path="*" element={<NotFound/>}></Route>
                 <Route path="/chat" element={<Chat/>}></Route>
             </Routes>

@@ -1,19 +1,15 @@
 package com.example.demo.repository.member.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.example.demo.repository.auth.entity.Auth;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
+@Setter
 public class Member {
 
     @Id
@@ -21,8 +17,15 @@ public class Member {
     private Long idx;
 
     private String email;
+    private String contact;
     private String password;
     private String name;
     private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private Auth auth;
 
 }

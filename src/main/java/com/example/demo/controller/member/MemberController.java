@@ -1,14 +1,13 @@
 package com.example.demo.controller.member;
 
+import com.example.demo.controller.Auth.component.JwtTokenProvider;
 import com.example.demo.controller.member.dto.MemberRequestDto;
 import com.example.demo.controller.member.dto.MemberResponseDto;
 import com.example.demo.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -17,15 +16,30 @@ import java.io.InputStreamReader;
 public class MemberController {
 
     private final MemberService memberService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    @PostMapping("/login")
-    public MemberResponseDto login(@RequestBody MemberRequestDto params) {
-        return memberService.findBy(params);
-    }
-    @PostMapping("/signUp")
-    public String signUp(@RequestBody MemberRequestDto params){
-        return memberService.signUpMember(params);
+    @GetMapping("/v1/user")
+    public ResponseEntity<?> findUser(@RequestHeader("Authorization") String accessToken) {
+        Long id = this.jwtTokenProvider.getUserIdFromToken(accessToken.substring(7));
+        MemberResponseDto userResponseDto = this.memberService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
 
+    /** 회원정보 수정 API */
+    @PutMapping("/v1/user")
+    public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String accessToken,
+                                        @RequestBody MemberRequestDto requestDto) {
+        Long id = this.jwtTokenProvider.getUserIdFromToken(accessToken.substring(7));
+        this.memberService.update(id, requestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    /** 회원정보 삭제 API */
+    @DeleteMapping("/v1/user")
+    public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String accessToken) {
+        Long id = this.jwtTokenProvider.getUserIdFromToken(accessToken.substring(7));
+        this.memberService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }
 
