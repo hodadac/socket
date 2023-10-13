@@ -34,12 +34,13 @@ public class AuthService {
         if (!passwordEncoder.matches(requestDto.getPassword(), member.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다. username = " + requestDto.getName());
         }
-
         // GENERATE ACCESS_TOKEN AND REFRESH_TOKEN
         String accessToken = this.jwtTokenProvider.generateAccessToken(
                 new UsernamePasswordAuthenticationToken(new CustomUserDetails(member), member.getPassword()));
+        System.out.println(accessToken);
         String refreshToken = this.jwtTokenProvider.generateRefreshToken(
                 new UsernamePasswordAuthenticationToken(new CustomUserDetails(member), member.getPassword()));
+        System.out.println(refreshToken);
 
         // CHECK IF AUTH ENTITY EXISTS, THEN UPDATE TOKEN
         if (this.authRepository.existsByMember(member)) {
@@ -62,9 +63,11 @@ public class AuthService {
     @Transactional
     public void signup(MemberRequestDto requestDto) {
         // SAVE USER ENTITY
-        requestDto.setRole(Role.ROLE_USER);
-        requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
-        this.memberRepository.save(requestDto.toEntity());
+        if(memberRepository.findByName(requestDto.getName()).isEmpty()){
+            requestDto.setRole(Role.ROLE_USER);
+            requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+            this.memberRepository.save(requestDto.toEntity());
+        }
     }
 
     /** Token 갱신 */

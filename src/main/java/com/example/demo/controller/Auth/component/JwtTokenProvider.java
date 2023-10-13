@@ -22,6 +22,8 @@ public class JwtTokenProvider {
 
     public String generateAccessToken(Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        System.out.println(jwtSecretKey);
+        System.out.println(jwtAccessTokenExpirationTime);
         Date expiryDate = new Date(new Date().getTime() + jwtAccessTokenExpirationTime);
         return Jwts.builder()
                 .setSubject(customUserDetails.getUsername())
