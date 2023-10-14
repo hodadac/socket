@@ -18,7 +18,7 @@ public class MemberController {
     private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @GetMapping("/v1/user")
+    @GetMapping("/user")
     public ResponseEntity<?> findUser(@RequestHeader("Authorization") String accessToken) {
         Long id = this.jwtTokenProvider.getUserIdFromToken(accessToken.substring(7));
         MemberResponseDto userResponseDto = this.memberService.findById(id);
@@ -26,7 +26,7 @@ public class MemberController {
     }
 
     /** 회원정보 수정 API */
-    @PutMapping("/v1/user")
+    @PutMapping("/user")
     public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String accessToken,
                                         @RequestBody MemberRequestDto requestDto) {
         Long id = this.jwtTokenProvider.getUserIdFromToken(accessToken.substring(7));
@@ -35,7 +35,7 @@ public class MemberController {
     }
 
     /** 회원정보 삭제 API */
-    @DeleteMapping("/v1/user")
+    @DeleteMapping("/user")
     public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String accessToken) {
         Long id = this.jwtTokenProvider.getUserIdFromToken(accessToken.substring(7));
         this.memberService.delete(id);

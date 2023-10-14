@@ -15,7 +15,7 @@ export const UserApi = axios.create({
 });
 
 const refreshAccessToken = async () => {
-    const response = await UserApi.get(`/api/v1/auth/refresh`);
+    const response = await UserApi.get(`/api/auth/refresh`);
     ACCESS_TOKEN = response.data;
     localStorage.setItem('accessToken', ACCESS_TOKEN);
     UserApi.defaults.headers.common['Authorization'] = `${TOKEN_TYPE} ${ACCESS_TOKEN}`;
@@ -34,15 +34,15 @@ UserApi.interceptors.response.use((response) => {
 });
 
 export const fetchUser = async () => {
-    const response = await UserApi.get(`/api/v1/user`);
+    const response = await UserApi.get(`/api/user`);
     return response.data;
 }
 
 export const updateUser = async (data) => {
-    const response = await UserApi.put(`/api/v1/user`, data);
+    const response = await UserApi.put(`/api/user`, data);
     return response.data;
 }
 
 export const deleteUser = async () => {
-    await UserApi.delete(`/api/v1/user`);
+    await UserApi.delete(`/api/user`);
 }

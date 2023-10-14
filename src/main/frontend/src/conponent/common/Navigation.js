@@ -2,7 +2,6 @@ import { Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import { useEffect, useState } from 'react';
 import {fetchUser} from "../page/content/member/Auth/UserAPI";
 
-
 export default function TestPage() {
     const [user, setUser] = useState({});
     const ACCESS_TOKEN = localStorage.getItem('accessToken');
@@ -25,17 +24,17 @@ export default function TestPage() {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="/home">
-                    Home
-                </Navbar.Brand>
+                {/*<Navbar.Brand href="/home">*/}
+                {/*    Home*/}
+                {/*</Navbar.Brand>*/}
 
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                {/*<Navbar.Toggle aria-controls="responsive-navbar-nav" />*/}
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto" alt="Nav Empty Space">
 
                     </Nav>
                     <Nav>
-                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="/">Home</Nav.Link>
                         <NavDropdown title="DropDown1" id="collasible-nav-dropdown">
                             <NavDropdown.Item href="/dropdown1/menu1">Menu1</NavDropdown.Item>
                             <NavDropdown.Item href="/dropdown1/menu2">Menu2</NavDropdown.Item>
@@ -54,7 +53,7 @@ export default function TestPage() {
                                 <NavDropdown.Item href="/" onClick={handleLogout}>로그아웃</NavDropdown.Item>
                             </NavDropdown>
                             :
-                            <NavDropdown title="Login/SignUp" id="collasible-nav-dropdown">
+                            <NavDropdown title="Join&Login" id="collasible-nav-dropdown">
                                 <NavDropdown.Item href="/Login">Login</NavDropdown.Item>
                                 <NavDropdown.Item href="/signUp">SignUp</NavDropdown.Item>
                             </NavDropdown>

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthRestController {
     private final AuthService authService;
 
-    @PostMapping("/v1/auth/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody AuthRequestDto requestDto) {
         System.out.print(requestDto.getPassword());
         AuthResponseDto responseDto = this.authService.login(requestDto);
@@ -25,7 +25,7 @@ public class AuthRestController {
     }
 
     /** 회원가입 API */
-    @PostMapping("/v1/auth/signup")
+    @PostMapping("/auth/signup")
     public ResponseEntity<?> singUp(@RequestBody MemberRequestDto requestDto) {
         System.out.print(requestDto.getPassword());
         this.authService.signup(requestDto);
@@ -33,7 +33,7 @@ public class AuthRestController {
     }
 
     /** 토큰갱신 API */
-    @GetMapping("/v1/auth/refresh")
+    @GetMapping("/auth/refresh")
     public ResponseEntity<?> refreshToken(@RequestHeader("REFRESH_TOKEN") String refreshToken) {
         String newAccessToken = this.authService.refreshToken(refreshToken);
         return ResponseEntity.status(HttpStatus.OK).body(newAccessToken);

@@ -14,7 +14,7 @@ export const AuthApi = axios.create({
 export const login = async ({ name, password }) => {
     const data = { name, password };
     console.log(data)
-    const response = await AuthApi.post(`/api/v1/auth/login`, data);
+    const response = await AuthApi.post(`/api/auth/login`, data);
     console.log(response.data);
     return response.data;
 }
@@ -22,6 +22,6 @@ export const login = async ({ name, password }) => {
 export const signUp = async ({ name, password }) => {
     const data = { name, password };
     console.log(data)
-    const response = await AuthApi.post(`/api/v1/auth/signup`, data);
+    const response = await AuthApi.post(`/api/auth/signup`, data);
     return response.data;
 }
